@@ -1,0 +1,53 @@
+package parsernew;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+ public class  Main {
+    public static void main(String[] args) throws IOException, Exception, NullPointerException
+    {
+        BufferedWriter  writer = null;
+        final PrintWriter out = new PrintWriter("result.txt"); // в каком файле будет text;;;
+        for (int i = 1; i < 30000;)
+        {
+            Document doc = Jsoup.connect("http://mb-catalog.ru/cat/1/item/"+i).get(); // коннектимся
+            i++;
+            Element character = doc.select("div[id=tovar_td_tv_input_items]").select("div").first();
+            if (character == null)
+            {
+                    String s = null;  //проверяем есть ли такой товар или есть ли он на складе        
+            }
+            else
+            {
+                    final  String text = character.text(); // описание
+
+                    Element names = doc.select("div[id=tovar_full-name]").first();
+                    final   String nameoft = names.text(); //парс артикула
+
+                    Elements links = doc.select("a.zoom2");
+                    Element link = links.first(); //картинка
+
+                    if (link == null)
+                    {
+                        String d = null
+                    }
+                    else
+                    {
+
+                        String url = link.attr("abs:href");//картинка
+                        System.out.println( text);
+                        out.write(nameoft+";"+url+";"+"\""+text+"\""+"\n" );
+
+                    }
+
+                }
+            }
+        			System.out.println("Program has finished");
+              out.close();
+    }
+}
